@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Club {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  name      String   @unique @db.VarChar(50)
+  courts    Court[]
+  admin     User     @relation(fields: [adminId], references: [id])
+  adminId   String   @unique
+}
+
+model Court {
+  id           String        @id @default(uuid())
+  createdAt    DateTime      @default(now())
+  name         String        @db.VarChar(50)
+  club         Club          @relation(fields: [clubId], references: [id])
+  clubId       String
+  reservations Reservation[]
+}
+
+model Reservation {
+  id      String @id @default(uuid())
+  court   Court  @relation(fields: [courtId], references: [id])
+  courtId String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @db.VarChar(50)
+  password     String        @db.VarChar(50)
+  reservations Reservation[]
+  admin        Boolean       @default(false)
+  club         Club?
+}
