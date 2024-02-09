@@ -35,7 +35,8 @@ model Reservation {
 
 model User {
   id           String        @id @default(uuid())
-  email        String        @db.VarChar(50)
+  fullName     String        @db.VarChar(50)
+  email        String        @unique @db.VarChar(50)
   password     String        @db.VarChar(50)
   reservations Reservation[]
   admin        Boolean       @default(false)
