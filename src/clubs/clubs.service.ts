@@ -10,10 +10,10 @@ export class ClubsService {
         return clubs;
     }
 
-    async getClub(params: { id: string }): Promise<Club | null> {
+    async getClub(id: string ): Promise<Club | null> {
         const club = await this.prisma.club.findUnique({
             where: {
-                id: params.id
+                id
             }
         })
         return club;

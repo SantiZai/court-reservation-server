@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UsersService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService) { }
     async getUsers(): Promise<User[]> {
         const users = await this.prisma.user.findMany()
         return users;
@@ -20,6 +20,6 @@ export class UsersService {
     }
 
     async createUser(data: Prisma.UserCreateInput): Promise<User> {
-        return await this.prisma.user.create({data})
+        return await this.prisma.user.create({ data })
     }
 }
