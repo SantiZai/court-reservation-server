@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ClubsService } from './clubs.service';
-import { Club } from '@prisma/client';
+import { Club, USER_TYPES } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
 
 @Controller('clubs')
@@ -32,8 +32,16 @@ export class ClubsController {
 
   @Post()
   @HttpCode(204)
-  async create(@Body() data: { club: Club; userId: string }): Promise<Club> {
+  async create(@Body() data: {club: Club, userId: string}): Promise<Club> {
     const existingUser = await this.usersService.getUser(data.userId);
+    const updatedUser = {
+      ...existingUser,
+      userType: USER_TYPES.superadmin,
+    };
+    await this.usersService.updateUser({
+        id: existingUser.id,
+        userType: USER_TYPES.superadmin
+    });
 
     // map the user to UserCreateNestedOneWithoutClubInput that prisma waits
     const mappedUser = {
@@ -48,7 +56,10 @@ export class ClubsController {
   }
 
   @Patch(':id')
-  async update(@Param("id") id: string, @Body() club: Club): Promise<Club | null> {
+  async update(
+    @Param('id') id: string,
+    @Body() club: Club,
+  ): Promise<Club | null> {
     const existingClub = await this.clubsService.getClub(id);
     if (!existingClub) throw new Error('Club not found');
     return await this.clubsService.updateClub(id, club);

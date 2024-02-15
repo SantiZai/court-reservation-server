@@ -13,7 +13,7 @@ export class UsersService {
   async getUser(id: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {
-        id,
+        id
       },
       include: { club: true },
     });
@@ -22,6 +22,15 @@ export class UsersService {
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
     return await this.prisma.user.create({ data });
+  }
+
+  async updateUser(user: Partial<User>): Promise<User | null> {
+    return await this.prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: user,
+    });
   }
 
   async deleteUser(id: string): Promise<User | null> {

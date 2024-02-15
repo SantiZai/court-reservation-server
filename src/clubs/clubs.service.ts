@@ -28,12 +28,12 @@ export class ClubsService {
   async updateClub(id: string, club: Club): Promise<Club | null> {
     return await this.prisma.club.update({
       where: {
-        id
+        id,
       },
       data: club,
       include: {
-        courts: true
-      }
+        courts: true,
+      },
     });
   }
 
