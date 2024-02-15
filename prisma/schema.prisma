@@ -7,6 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum USER_TYPES {
+  superadmin
+  admin
+  user
+}
+
+enum SURFACES {
+  polvo_de_ladrillo
+  cemento
+  cesped
+  parquet
+  arena
+  alfombra
+}
+
 model Club {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -21,6 +36,7 @@ model Court {
   id           String        @id @default(uuid())
   createdAt    DateTime      @default(now())
   name         String        @db.VarChar(50)
+  surface      SURFACES
   club         Club          @relation(fields: [clubId], references: [id])
   clubId       String
   reservations Reservation[]
@@ -40,6 +56,6 @@ model User {
   email        String        @unique @db.VarChar(50)
   password     String        @db.VarChar(50)
   reservations Reservation[]
-  admin        Boolean       @default(false)
+  userType     USER_TYPES    @default(user)
   club         Club?
 }
