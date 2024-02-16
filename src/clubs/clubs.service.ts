@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 @Injectable()
 export class ClubsService {
   constructor(private prisma: PrismaService) {}
+  
   async getClubs(): Promise<Club[]> {
     return await this.prisma.club.findMany();
   }
