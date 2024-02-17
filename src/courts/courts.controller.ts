@@ -6,17 +6,40 @@ import {
   HttpCode,
   Param,
   Patch,
+  Post,
 } from '@nestjs/common';
 import { CourtsService } from './courts.service';
 import { Court } from '@prisma/client';
+import { ClubsService } from 'src/clubs/clubs.service';
 
 @Controller('courts')
 export class CourtsController {
-  constructor(private courtsService: CourtsService) {}
+  constructor(
+    private courtsService: CourtsService,
+    private clubsServices: ClubsService,
+  ) {}
 
   @Get(':id')
   async findAllByClubId(@Param('id') id: string): Promise<Court[]> {
     return await this.courtsService.getCourtsByClubId(id);
+  }
+
+  @Post()
+  @HttpCode(204)
+  async create(@Body() data: { court: Court; clubId: string }): Promise<Court> {
+    const existingClub = await this.clubsServices.getClub(data.clubId);
+  console.log(data.court)
+
+    // map the club
+    const mappedClub = {
+      connect: {
+        id: existingClub.id,
+      },
+    };
+    return await this.courtsService.createCourt({
+      ...data.court,
+      club: mappedClub,
+    });
   }
 
   @Patch(':id')

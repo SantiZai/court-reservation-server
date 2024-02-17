@@ -34,10 +34,6 @@ export class ClubsController {
   @HttpCode(204)
   async create(@Body() data: { club: Club; userId: string }): Promise<Club> {
     const existingUser = await this.usersService.getUser(data.userId);
-    const updatedUser = {
-      ...existingUser,
-      userType: USER_TYPES.superadmin,
-    };
     await this.usersService.updateUser({
       id: existingUser.id,
       userType: USER_TYPES.superadmin,

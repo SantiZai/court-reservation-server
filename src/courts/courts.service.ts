@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Court } from '@prisma/client';
+import { Court, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -12,9 +12,14 @@ export class CourtsService {
         clubId: id,
       },
       include: {
+        club: true,
         reservations: true,
       },
     });
+  }
+
+  async createCourt(data: Prisma.CourtCreateInput): Promise<Court> {
+    return await this.prisma.court.create({ data });
   }
 
   async updateCourt(id: string, court: Court): Promise<Court | null> {
