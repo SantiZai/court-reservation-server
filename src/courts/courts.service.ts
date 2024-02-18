@@ -12,8 +12,19 @@ export class CourtsService {
         clubId: id,
       },
       include: {
-        club: true,
         reservations: true,
+      },
+    });
+  }
+
+  async getUniqueCourtByClubId(
+    clubId: string,
+    courtId: string,
+  ): Promise<Court | null> {
+    return await this.prisma.court.findUnique({
+      where: {
+        id: courtId,
+        clubId,
       },
     });
   }

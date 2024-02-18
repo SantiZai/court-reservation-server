@@ -16,7 +16,7 @@ import { ClubsService } from 'src/clubs/clubs.service';
 export class CourtsController {
   constructor(
     private courtsService: CourtsService,
-    private clubsServices: ClubsService,
+    private clubsService: ClubsService,
   ) {}
 
   @Get(':id')
@@ -24,11 +24,18 @@ export class CourtsController {
     return await this.courtsService.getCourtsByClubId(id);
   }
 
+  @Get(':clubid/:courtid')
+  async findUniqueByClubId(
+    @Param('clubid') clubid: string,
+    @Param('courtid') courtid: string,
+  ): Promise<Court | null> {
+    return await this.courtsService.getUniqueCourtByClubId(clubid, courtid);
+  }
+
   @Post()
   @HttpCode(204)
   async create(@Body() data: { court: Court; clubId: string }): Promise<Court> {
-    const existingClub = await this.clubsServices.getClub(data.clubId);
-  console.log(data.court)
+    const existingClub = await this.clubsService.getClub(data.clubId);
 
     // map the club
     const mappedClub = {

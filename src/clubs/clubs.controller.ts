@@ -24,7 +24,6 @@ export class ClubsController {
     return await this.clubsService.getClubs();
   }
 
-  // TODO: valid if the club exists before return
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Club | null> {
     return await this.clubsService.getClub(id);
