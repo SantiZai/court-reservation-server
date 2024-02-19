@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { User } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
@@ -40,19 +40,12 @@ export class AuthController {
 
   @Post('/sign-up')
   @HttpCode(204)
-  async signUp(req: Request, res: Response): Promise<User> {
-    try {
-      const user = req.body;
-      const hashedPassword = await hash(user.password, 10);
-      const newUser: User = {
-        ...user,
-        password: hashedPassword,
-      };
-      return await this.usersService.createUser(newUser);
-    } catch (e) {
-      res.status(500).json({
-        message: 'An error occurred while trying to create the user',
-      });
-    }
+  async signUp(@Body() user: User): Promise<User> {
+    const hashedPassword = await hash(user.password, 10);
+    const newUser: User = {
+      ...user,
+      password: hashedPassword,
+    };
+    return await this.usersService.createUser(newUser);
   }
 }

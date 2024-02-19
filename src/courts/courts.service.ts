@@ -49,4 +49,12 @@ export class CourtsService {
       },
     });
   }
+
+  async deleteAllClubCourts(clubId: string): Promise<void> {
+    await this.prisma.court.deleteMany({
+      where: {
+        clubId
+      }
+    })
+  }
 }

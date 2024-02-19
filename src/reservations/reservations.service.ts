@@ -22,4 +22,12 @@ export class ReservationsService {
   ): Promise<Reservation> {
     return await this.prisma.reservation.create({ data });
   }
+
+  async deleteReservation(id: string): Promise<Reservation | null> {
+    return await this.prisma.reservation.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

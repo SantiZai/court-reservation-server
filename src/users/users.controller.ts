@@ -24,12 +24,6 @@ export class UsersController {
     return await this.usersService.getUser(id);
   }
 
-  @Post()
-  @HttpCode(204)
-  async create(@Body() user: User): Promise<User> {
-    return await this.usersService.createUser(user);
-  }
-
   @Delete(':id')
   @HttpCode(204)
   async delete(@Param('id') id: string): Promise<User | null> {

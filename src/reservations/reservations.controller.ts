@@ -1,4 +1,12 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { Reservation } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
@@ -19,7 +27,7 @@ export class ReservationsController {
     return await this.reservationsService.getReservationsByUserId(id);
   }
 
-  @Post("/new")
+  @Post('/new')
   @HttpCode(204)
   async create(
     @Body()
@@ -53,5 +61,11 @@ export class ReservationsController {
       user: mappedUser,
       court: mappedCourt,
     });
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async delete(@Param('id') id: string): Promise<Reservation | null> {
+    return await this.reservationsService.deleteReservation(id);
   }
 }

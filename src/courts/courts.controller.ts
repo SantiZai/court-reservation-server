@@ -63,4 +63,10 @@ export class CourtsController {
   async delete(@Param('id') id: string): Promise<Court> {
     return await this.courtsService.deleteCourt(id);
   }
+
+  @Delete('/club/:id')
+  @HttpCode(204)
+  async deleteAllCourts(@Param('id') id: string): Promise<void> {
+    await this.courtsService.deleteAllClubCourts(id);
+  }
 }

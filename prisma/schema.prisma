@@ -57,7 +57,7 @@ model User {
   createdAt    DateTime      @default(now())
   fullName     String        @db.VarChar(50)
   email        String        @unique @db.VarChar(50)
-  password     String        @db.VarChar(50)
+  password     String        @db.VarChar(150)
   reservations Reservation[]
   userType     USER_TYPES    @default(user)
   club         Club?

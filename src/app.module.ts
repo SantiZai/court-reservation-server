@@ -12,7 +12,6 @@ import { CourtsController } from './courts/courts.controller';
 import { CourtsService } from './courts/courts.service';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [],
@@ -31,7 +30,6 @@ import { AuthService } from './auth/auth.service';
     UsersService,
     CourtsService,
     ReservationsService,
-    AuthService,
   ],
 })
 export class AppModule implements NestModule {
