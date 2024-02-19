@@ -14,6 +14,6 @@ import { CourtsService } from "./courts/courts.service";
 @Module({
   imports: [],
   controllers: [AppController, ClubsController, UsersController, CourtsController, ReservationsController],
-  providers: [AppService, PrismaService, ClubsService, UsersService, CourtsService, ReservationsService],
+  providers: [AppService, PrismaService, ClubsService, UsersService, CourtsService, ReservationsService]
 })
 export class AppModule { }
