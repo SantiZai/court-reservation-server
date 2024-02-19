@@ -19,7 +19,7 @@ export class ReservationsController {
     return await this.reservationsService.getReservationsByUserId(id);
   }
 
-  @Post()
+  @Post("/new")
   @HttpCode(204)
   async create(
     @Body()

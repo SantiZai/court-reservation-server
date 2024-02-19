@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
+    console.log(req.headers["auth-token"])
     const token = req.headers['auth-token'][0];
     !token ??
       res.status(401).json({

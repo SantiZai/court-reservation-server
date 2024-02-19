@@ -1,19 +1,41 @@
-import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { ClubsController } from "./clubs/clubs.controller";
-import { UsersController } from "./users/users.controller";
-import { AppService } from "./app.service";
-import { ClubsService } from "./clubs/clubs.service";
-import { UsersService } from "./users/users.service";
-import { PrismaService } from "./prisma.service";
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { ClubsController } from './clubs/clubs.controller';
+import { UsersController } from './users/users.controller';
+import { AppService } from './app.service';
+import { ClubsService } from './clubs/clubs.service';
+import { UsersService } from './users/users.service';
+import { PrismaService } from './prisma.service';
 import { ReservationsController } from './reservations/reservations.controller';
 import { ReservationsService } from './reservations/reservations.service';
-import { CourtsController } from "./courts/courts.controller";
-import { CourtsService } from "./courts/courts.service";
+import { CourtsController } from './courts/courts.controller';
+import { CourtsService } from './courts/courts.service';
+import { AuthMiddleware } from './auth/auth.middleware';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, ClubsController, UsersController, CourtsController, ReservationsController],
-  providers: [AppService, PrismaService, ClubsService, UsersService, CourtsService, ReservationsService]
+  controllers: [
+    AppController,
+    ClubsController,
+    UsersController,
+    CourtsController,
+    ReservationsController,
+    AuthController,
+  ],
+  providers: [
+    AppService,
+    PrismaService,
+    ClubsService,
+    UsersService,
+    CourtsService,
+    ReservationsService,
+    AuthService,
+  ],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('reservations/new');
+  }
+}
