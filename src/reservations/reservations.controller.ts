@@ -6,11 +6,13 @@ import {
   HttpCode,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { Reservation } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
 import { CourtsService } from 'src/courts/courts.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('reservations')
 export class ReservationsController {
@@ -20,6 +22,7 @@ export class ReservationsController {
     private courtsService: CourtsService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findReservationsByUserId(
     @Param('id') id: string,

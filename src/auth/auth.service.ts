@@ -16,10 +16,11 @@ export class AuthService {
     if (!existingUser) new HttpException('User not found', 404);
     const checkPassword = await compare(user.password, existingUser.password);
     if (!checkPassword) new HttpException('Password incorrect', 403);
-    const token = this.jwtService.sign({
+    const payload = {
       id: existingUser.id,
-      username: existingUser.fullName,
-    });
+      fullName: existingUser.fullName,
+    };
+    const token = this.jwtService.sign(payload);
     return { user: existingUser, token };
   }
 
