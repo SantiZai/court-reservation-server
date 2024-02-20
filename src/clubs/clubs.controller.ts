@@ -7,10 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ClubsService } from './clubs.service';
 import { Club, USER_TYPES } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('clubs')
 export class ClubsController {
@@ -29,6 +31,7 @@ export class ClubsController {
     return await this.clubsService.getClub(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(204)
   async create(@Body() data: { club: Club; userId: string }): Promise<Club> {
@@ -50,6 +53,7 @@ export class ClubsController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -60,6 +64,7 @@ export class ClubsController {
     return await this.clubsService.updateClub(id, club);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
   async delete(@Param('id') id: string): Promise<Club | null> {

@@ -30,6 +30,7 @@ export class ReservationsController {
     return await this.reservationsService.getReservationsByUserId(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('/new')
   @HttpCode(204)
   async create(
@@ -66,6 +67,7 @@ export class ReservationsController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
   async delete(@Param('id') id: string): Promise<Reservation | null> {

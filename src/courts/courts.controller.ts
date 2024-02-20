@@ -7,10 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CourtsService } from './courts.service';
 import { Court } from '@prisma/client';
 import { ClubsService } from 'src/clubs/clubs.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('courts')
 export class CourtsController {
@@ -32,6 +34,7 @@ export class CourtsController {
     return await this.courtsService.getUniqueCourtByClubId(clubid, courtid);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(204)
   async create(@Body() data: { court: Court; clubId: string }): Promise<Court> {
@@ -49,6 +52,7 @@ export class CourtsController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @HttpCode(204)
   async update(
@@ -58,12 +62,14 @@ export class CourtsController {
     return await this.courtsService.updateCourt(id, court);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
   async delete(@Param('id') id: string): Promise<Court> {
     return await this.courtsService.deleteCourt(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/club/:id')
   @HttpCode(204)
   async deleteAllCourts(@Param('id') id: string): Promise<void> {

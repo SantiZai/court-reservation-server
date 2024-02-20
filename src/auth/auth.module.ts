@@ -7,7 +7,6 @@ import { PrismaService } from 'src/prisma.service';
 import { jwtConstants } from './jwt.constants';
 import { JwtStrategy } from './jwt.strategy';
 
-//TODO: generar una semilla secreta
 @Module({
   imports: [
     JwtModule.register({
