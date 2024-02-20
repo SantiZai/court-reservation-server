@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ClubsController } from './clubs/clubs.controller';
 import { UsersController } from './users/users.controller';
@@ -10,18 +10,16 @@ import { ReservationsController } from './reservations/reservations.controller';
 import { ReservationsService } from './reservations/reservations.service';
 import { CourtsController } from './courts/courts.controller';
 import { CourtsService } from './courts/courts.service';
-import { AuthMiddleware } from './auth/auth.middleware';
-import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [],
+  imports: [AuthModule],
   controllers: [
     AppController,
     ClubsController,
     UsersController,
     CourtsController,
     ReservationsController,
-    AuthController,
   ],
   providers: [
     AppService,
@@ -32,8 +30,4 @@ import { AuthController } from './auth/auth.controller';
     ReservationsService,
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('reservations/new');
-  }
-}
+export class AppModule {}
