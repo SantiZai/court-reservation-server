@@ -13,7 +13,10 @@ import { Reservation } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
 import { CourtsService } from 'src/courts/courts.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('reservations')
+@ApiBearerAuth()
 @Controller('reservations')
 export class ReservationsController {
   constructor(

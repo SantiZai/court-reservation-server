@@ -13,7 +13,10 @@ import { CourtsService } from './courts.service';
 import { Court } from '@prisma/client';
 import { ClubsService } from 'src/clubs/clubs.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('courts')
+@ApiBearerAuth()
 @Controller('courts')
 export class CourtsController {
   constructor(

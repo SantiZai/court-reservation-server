@@ -13,7 +13,9 @@ import { ClubsService } from './clubs.service';
 import { Club, USER_TYPES } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags("clubs")
 @Controller('clubs')
 export class ClubsController {
   constructor(
@@ -38,6 +40,7 @@ export class ClubsController {
     return await this.clubsService.filterClubs(location);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(204)
@@ -60,6 +63,7 @@ export class ClubsController {
     });
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
@@ -71,6 +75,7 @@ export class ClubsController {
     return await this.clubsService.updateClub(id, club);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
