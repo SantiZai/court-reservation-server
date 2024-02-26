@@ -64,6 +64,7 @@ export class ClubsController {
   }
 
   @ApiBearerAuth()
+  @ApiBody({ type: ClubDto })
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
