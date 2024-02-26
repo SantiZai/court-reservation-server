@@ -12,10 +12,11 @@ import {
 import { ClubsService } from './clubs.service';
 import { Club, USER_TYPES } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ClubDto } from 'src/globalsDtos';
 
-@ApiTags("clubs")
+@ApiTags('clubs')
 @Controller('clubs')
 export class ClubsController {
   constructor(
@@ -34,14 +35,13 @@ export class ClubsController {
   }
 
   @Get('search/:location')
-  async filterClubs(
-    @Param('location') location: string,
-  ): Promise<Club[]> {
+  async filterClubs(@Param('location') location: string): Promise<Club[]> {
     return await this.clubsService.filterClubs(location);
   }
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiBody({ type: ClubDto })
   @Post()
   @HttpCode(204)
   async create(@Body() data: { club: Club; userId: string }): Promise<Club> {
