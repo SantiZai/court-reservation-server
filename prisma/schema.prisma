@@ -13,6 +13,15 @@ enum USER_TYPES {
   user
 }
 
+enum SPORTS {
+  tenis
+  futbol
+  basquet
+  voleibol
+  hockey
+  rugby
+}
+
 enum SURFACES {
   polvo_de_ladrillo
   cemento
@@ -30,6 +39,7 @@ model Club {
   courts    Court[]
   admin     User     @relation(fields: [adminId], references: [id])
   adminId   String   @unique
+  sports    SPORTS[]
 }
 
 model Court {
@@ -40,6 +50,7 @@ model Court {
   club         Club          @relation(fields: [clubId], references: [id])
   clubId       String
   reservations Reservation[]
+  sport        SPORTS
 }
 
 model Reservation {

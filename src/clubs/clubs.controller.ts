@@ -31,6 +31,13 @@ export class ClubsController {
     return await this.clubsService.getClub(id);
   }
 
+  @Get('search/:location')
+  async filterClubs(
+    @Param('location') location: string,
+  ): Promise<Club[]> {
+    return await this.clubsService.filterClubs(location);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(204)

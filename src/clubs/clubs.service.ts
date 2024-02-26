@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 @Injectable()
 export class ClubsService {
   constructor(private prisma: PrismaService) {}
-  
+
   async getClubs(): Promise<Club[]> {
     return await this.prisma.club.findMany();
   }
@@ -20,6 +20,27 @@ export class ClubsService {
       },
     });
     return club;
+  }
+
+  async filterClubs(
+    location: string,
+    sport?: string,
+    date?: string,
+    hour?: string,
+  ): Promise<Club[]> {
+    const mappedLocation = location
+      .split(',')
+      .map((part) => part.split('-').join(' '))
+      .join(', ');
+    console.log(mappedLocation)
+    return await this.prisma.club.findMany({
+      where: {
+        location: mappedLocation,
+      },
+      include: {
+        courts: true,
+      },
+    });
   }
 
   async createClub(data: Prisma.ClubCreateInput): Promise<Club> {
