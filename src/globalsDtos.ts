@@ -19,10 +19,20 @@ class CourtDto {
   clubId: string;
 }
 
+class ReservationDto {
+  reservation: {
+    date: string;
+    hour: string;
+  };
+  userId: string;
+  clubId: string;
+  courtId: string;
+}
+
 class UserDto {
   fullname: string;
   email: string;
   password: string;
 }
 
-export { ClubDto, CourtDto, UserDto };
+export { ClubDto, CourtDto, ReservationDto, UserDto };
