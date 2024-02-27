@@ -35,7 +35,7 @@ export class ClubsController {
     return await this.clubsService.getClub(id);
   }
 
-  @Get('filter/search')
+  @Get('search/many')
   async filterClubs(@Query() query: any): Promise<Club[]> {
     return await this.clubsService.filterClubs(query.location, query.sport);
   }

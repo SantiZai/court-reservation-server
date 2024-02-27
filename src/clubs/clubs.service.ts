@@ -32,7 +32,6 @@ export class ClubsService {
       .split(',')
       .map((part) => part.split('-').join(' '))
       .join(', ');
-    //TODO: no llegan las query
     return await this.prisma.club.findMany({
       where: {
         location: mappedLocation,
