@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Club, Prisma } from '@prisma/client';
+import { Club, Prisma, SPORTS } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class ClubsService {
 
   async filterClubs(
     location: string,
-    sport?: string,
+    sport: SPORTS,
     date?: string,
     hour?: string,
   ): Promise<Club[]> {
@@ -32,10 +32,13 @@ export class ClubsService {
       .split(',')
       .map((part) => part.split('-').join(' '))
       .join(', ');
-    console.log(mappedLocation)
+    //TODO: no llegan las query
     return await this.prisma.club.findMany({
       where: {
         location: mappedLocation,
+        sports: {
+          has: sport,
+        },
       },
       include: {
         courts: true,

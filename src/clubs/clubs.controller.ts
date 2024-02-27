@@ -7,10 +7,11 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ClubsService } from './clubs.service';
-import { Club, USER_TYPES } from '@prisma/client';
+import { Club, SPORTS, USER_TYPES } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
@@ -34,9 +35,9 @@ export class ClubsController {
     return await this.clubsService.getClub(id);
   }
 
-  @Get('search/:location')
-  async filterClubs(@Param('location') location: string): Promise<Club[]> {
-    return await this.clubsService.filterClubs(location);
+  @Get('filter/search')
+  async filterClubs(@Query() query: any): Promise<Club[]> {
+    return await this.clubsService.filterClubs(query.location, query.sport);
   }
 
   @ApiBearerAuth()
