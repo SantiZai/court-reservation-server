@@ -16,6 +16,7 @@ import { UsersService } from 'src/users/users.service';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { ClubDto } from 'src/globalsDtos';
+import { mapLocation, mapSportToEnum } from 'src/utils';
 
 @ApiTags('clubs')
 @Controller('clubs')
@@ -36,8 +37,13 @@ export class ClubsController {
   }
 
   @Get('search/many')
-  async filterClubs(@Query() query: any): Promise<Club[]> {
-    return await this.clubsService.filterClubs(query.location, query.sport);
+  async filterClubs(@Query() queries: any): Promise<Club[]> {
+    const mappedQueries = {
+      ...queries,
+      location: mapLocation(queries.location),
+      sport: mapSportToEnum(queries.sport)
+    }
+    return await this.clubsService.filterClubs(mappedQueries.location, mappedQueries.sport);
   }
 
   @ApiBearerAuth()

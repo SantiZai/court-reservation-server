@@ -28,13 +28,9 @@ export class ClubsService {
     date?: string,
     hour?: string,
   ): Promise<Club[]> {
-    const mappedLocation = location
-      .split(',')
-      .map((part) => part.split('-').join(' '))
-      .join(', ');
     return await this.prisma.club.findMany({
       where: {
-        location: mappedLocation,
+        location,
         sports: {
           has: sport,
         },
