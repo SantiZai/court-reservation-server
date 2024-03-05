@@ -13,7 +13,8 @@ import { CourtsService } from './courts.service';
 import { Court } from '@prisma/client';
 import { ClubsService } from 'src/clubs/clubs.service';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { CourtDto } from 'src/globalsDtos';
 
 @ApiTags('courts')
 @ApiBearerAuth()
@@ -37,7 +38,9 @@ export class CourtsController {
     return await this.courtsService.getUniqueCourtByClubId(clubid, courtid);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiBody({ type: CourtDto })
   @Post()
   @HttpCode(204)
   async create(@Body() data: { court: Court; clubId: string }): Promise<Court> {
@@ -55,7 +58,9 @@ export class CourtsController {
     });
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiBody({ type: CourtDto })
   @Patch(':id')
   @HttpCode(204)
   async update(
@@ -65,6 +70,7 @@ export class CourtsController {
     return await this.courtsService.updateCourt(id, court);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
@@ -72,6 +78,7 @@ export class CourtsController {
     return await this.courtsService.deleteCourt(id);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete('/club/:id')
   @HttpCode(204)
