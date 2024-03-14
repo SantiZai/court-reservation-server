@@ -8,10 +8,10 @@ import { ReservationsController } from './reservations/reservations.controller';
 import { ReservationsService } from './reservations/reservations.service';
 import { CourtsController } from './courts/courts.controller';
 import { CourtsService } from './courts/courts.service';
-import { AuthModule } from './auth/auth.module';
+/* import { AuthModule } from './auth/auth.module'; */
 
 @Module({
-  imports: [AuthModule],
+  imports: [/* AuthModule */],
   controllers: [
     ClubsController,
     UsersController,
