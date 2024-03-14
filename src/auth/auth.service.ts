@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+/* import { HttpException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
@@ -32,4 +32,4 @@ export class AuthService {
     };
     return await this.usersService.createUser(newUser);
   }
-}
+} */

@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+/* import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
@@ -22,3 +22,4 @@ export class AuthController {
     return await this.authService.signUp(user);
   }
 }
+ */

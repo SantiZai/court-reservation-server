@@ -32,7 +32,6 @@ class ReservationDto {
 class UserDto {
   fullname: string;
   email: string;
-  password: string;
 }
 
 export { ClubDto, CourtDto, ReservationDto, UserDto };
